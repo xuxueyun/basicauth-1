@@ -37,3 +37,10 @@ func GetUserPass(r *http.Request) (username, password string) {
 
 	return
 }
+
+// Add the basic auth version of the username, password to the http.Header
+func AddBasicAuth(h http.Header, username, password string) {
+	auth := []byte(username + ":" + password)
+	authEnc := base64.StdEncoding.EncodeToString(auth)
+	h.Set("Authorization", "Basic "+authEnc)
+}
